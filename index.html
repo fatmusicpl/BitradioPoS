@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Bitradio (BRO) Proof of Stake (PoS) mining calculator</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	
+	<script>
+	var key = '3baddf35eadf';
+	$( document ).ready(function() {
+		$('button').on('click', function() {
+			var weight = parseFloat($('#weight').val());
+			var stake = parseFloat($('#stake').val());
+			$('.address').each(function( index ) {
+				var row = $(this).closest('.row');
+				if ($('.address', row).val() != '') {
+					$.ajax({
+						type: "POST",
+						url: 'https://chainz.cryptoid.info/bro/api.dws?q=getbalance&a='+ $('.address', row).val() +'&key=' + key,
+						success: function(result, status, xhr){
+							$('.balance', row).val(result)
+						},
+						  error: function(xhr, status, err) {
+							alert(status + ": " + err);
+						}
+					});
+				}
+			});
+			var secondsPerBlock = parseInt($('#seconds').val());
+			for (var i = 0 * secondsPerBlock; i < 31536000; i += secondsPerBlock) {
+			}
+			setTimeout(
+				function(){ 
+					var balances = [];
+					$('.balance').each(function( index ) {
+						if ($(this).val() != '') {
+							balances.push(parseFloat($(this).val()));
+						}
+					});
+					var temp = [0,0,0,0,0,0];
+					var stakes = [0,0,0,0,0,0];
+					for (var i = 0 * secondsPerBlock; i < 31536000; i += secondsPerBlock) {
+						for (var j = 0; j < balances.length; j++) {
+							temp[j] = temp[j] + balances[j];
+							if (temp[j] > weight) {
+								stakes[j] = stakes[j] + stake;
+								temp[j] = 0;
+								balances[j] = balances[j] + stake;
+								console.log('Stake #' + (j + 1) + ' on day ' + parseInt(i / 60 / 60 / 24) + ' ');
+								$('#log').append('Stake #' + (j + 1) + ' on day ' + parseInt(i / 60 / 60 / 24) + '<br>')
+								
+							}
+						}
+					}
+					for(var j = 0; j < balances.length; j++) {
+						$('#log').append('Stakes #' + (j + 1) + ' ' + stakes[j] + ', ' + parseInt((stakes[j] / balances[j]) * 100) + '%<br>')
+					}
+					
+				}, 
+			3000);
+		});
+	});
+	
+	</script>
+</head>
+<body style="">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12" style="text-align: center;">
+				<h1>Bitradio (BRO) Proof of Stake (PoS) mining calculator</h1>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12" style="text-align: center;">
+				Trading is a high risk activity, consult you financial advisor before making any decision. We are NOT financial advisors, and this site does not give trading advices.
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<hr>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-3">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="form-group">
+							<div class="input-group mb-2 mr-sm-2 mb-sm-0">
+								<div class="input-group-addon">Network weight</div>
+								<input type="text" class="form-control" id="weight" placeholder="Weight" value="840000">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="form-group">
+							<div class="input-group mb-2 mr-sm-2 mb-sm-0">
+								<div class="input-group-addon">Seconds per block</div>
+								<input type="text" class="form-control" id="seconds" placeholder="Seconds" value="120">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<div class="form-group">
+							<div class="input-group mb-2 mr-sm-2 mb-sm-0">
+								<div class="input-group-addon">Stake</div>
+								<input type="text" class="form-control" id="stake" placeholder="Stake" value="0.5">
+								<div class="input-group-addon">BRO</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<button class="btn btn-primary" type="button">Check</button>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-9">
+				<div class="row">
+					<div class="col-md-8">
+						<div class="form-group">
+							<div class="input-group mb-2 mr-sm-2 mb-sm-0">
+								<div class="input-group-addon">Address #1</div>
+								<input type="text" class="form-control address" id="" placeholder="Address">
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<div class="input-group mb-2 mr-sm-2 mb-sm-0">
+								<div class="input-group-addon">Balance #1</div>
+								<input type="text" class="form-control balance" id="" placeholder="Balance">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-8">
+						<div class="form-group">
+							<div class="input-group mb-2 mr-sm-2 mb-sm-0">
+								<div class="input-group-addon">Address #2</div>
+								<input type="text" class="form-control address" id="" placeholder="Address">
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<div class="input-group mb-2 mr-sm-2 mb-sm-0">
+								<div class="input-group-addon">Balance #2</div>
+								<input type="text" class="form-control balance" id="" placeholder="Balance">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-8">
+						<div class="form-group">
+							<div class="input-group mb-2 mr-sm-2 mb-sm-0">
+								<div class="input-group-addon">Address #3</div>
+								<input type="text" class="form-control address" id="" placeholder="Address">
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<div class="input-group mb-2 mr-sm-2 mb-sm-0">
+								<div class="input-group-addon">Balance #3</div>
+								<input type="text" class="form-control balance" id="" placeholder="Balance">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-8">
+						<div class="form-group">
+							<div class="input-group mb-2 mr-sm-2 mb-sm-0">
+								<div class="input-group-addon">Address #4</div>
+								<input type="text" class="form-control address" id="" placeholder="Address">
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<div class="input-group mb-2 mr-sm-2 mb-sm-0">
+								<div class="input-group-addon">Balance #4</div>
+								<input type="text" class="form-control balance" id="" placeholder="Balance">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-8">
+						<div class="form-group">
+							<div class="input-group mb-2 mr-sm-2 mb-sm-0">
+								<div class="input-group-addon">Address #5</div>
+								<input type="text" class="form-control address" id="" placeholder="Address">
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<div class="input-group mb-2 mr-sm-2 mb-sm-0">
+								<div class="input-group-addon">Balance #5</div>
+								<input type="text" class="form-control balance" id="" placeholder="Balance">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-8">
+						<div class="form-group">
+							<div class="input-group mb-2 mr-sm-2 mb-sm-0">
+								<div class="input-group-addon">Address #6</div>
+								<input type="text" class="form-control address" id="" placeholder="Address">
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="form-group">
+							<div class="input-group mb-2 mr-sm-2 mb-sm-0">
+								<div class="input-group-addon">Balance #6</div>
+								<input type="text" class="form-control balance" id="" placeholder="Balance">
+							</div>
+						</div>
+					</div>					
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="panel panel-default">
+					<div class="panel-heading">Logs</div>
+					<div class="panel-body" style="text-align: center;" id="log"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>
+	
