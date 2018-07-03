@@ -41,23 +41,20 @@
 					});
 					var temp = [0,0,0,0,0,0];
 					var stakes = [0,0,0,0,0,0];
-					for (var i = 0 * secondsPerBlock; i < 31536000; i += secondsPerBlock) {
+					for (var i = 0; i < 31536000; i += secondsPerBlock) {
 						for (var j = 0; j < balances.length; j++) {
 							temp[j] = temp[j] + balances[j];
 							if (temp[j] > weight) {
 								stakes[j] = stakes[j] + stake;
 								temp[j] = 0;
 								balances[j] = balances[j] + stake;
-								console.log('Stake #' + (j + 1) + ' on day ' + parseInt(i / 60 / 60 / 24) + ' ');
-								$('#log').append('Stake #' + (j + 1) + ' on day ' + parseInt(i / 60 / 60 / 24) + '<br>')
-								
+								$('#log').append('Stake #' + (j + 1) + ' on day ' + parseInt((i / 60 / 60 / 24) + 1) + ' block #' + parseInt(i / secondsPerBlock) + '<br>');
 							}
 						}
 					}
 					for(var j = 0; j < balances.length; j++) {
-						$('#log').append('Stakes #' + (j + 1) + ' ' + stakes[j] + ', ' + parseInt((stakes[j] / balances[j]) * 100) + '%<br>')
+						$('#log').append('Stakes #' + (j + 1) + ' ' + stakes[j] + ', ' + parseInt((stakes[j] / balances[j]) * 100) + '% yearly<br>')
 					}
-					
 				}, 
 			3000);
 		});
