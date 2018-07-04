@@ -44,7 +44,7 @@
 					for (var i = 0; i < 31536000; i += secondsPerBlock) {
 						for (var j = 0; j < balances.length; j++) {
 							temp[j] = temp[j] + balances[j];
-							if (temp[j] > weight) {
+							if (temp[j] >= weight) {
 								stakes[j] = stakes[j] + stake;
 								temp[j] = 0;
 								balances[j] = balances[j] + stake;
