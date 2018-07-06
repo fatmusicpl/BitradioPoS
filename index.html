@@ -10,7 +10,10 @@
 	<script>
 	var key = '3baddf35eadf';
 	$( document ).ready(function() {
-		$('button').on('click', function() {
+                $('#clearLogs').on('click', function() {
+                    $('#log').text('');
+                });
+		$('#check').on('click', function() {
 			var weight = parseFloat($('#weight').val());
 			var stake = parseFloat($('#stake').val());
 			$('.address').each(function( index ) {
@@ -54,9 +57,10 @@
 					}
 					for(var j = 0; j < balances.length; j++) {
 						$('#log').append('Stakes #' + (j + 1) + ' ' + stakes[j] + ', ' + parseInt((stakes[j] / (balances[j] - stakes[j])) * 100) + '% yearly<br>')
+                                                document.getElementById("log").scrollTop = document.getElementById("log").scrollHeight;
 					}
 				}, 
-			3000);
+			2500);
 		});
 	});
 	
@@ -109,7 +113,7 @@
 				</div>
 				<div class="row">
 					<div class="col-md-12">
-						<button class="btn btn-primary" type="button">Check</button>
+						<button class="btn btn-primary" type="button" id="check">Check</button>
 					</div>
 				</div>
 			</div>
@@ -119,7 +123,7 @@
 						<div class="form-group">
 							<div class="input-group mb-2 mr-sm-2 mb-sm-0">
 								<div class="input-group-addon">Address #1</div>
-								<input type="text" class="form-control address" id="" placeholder="Address">
+								<input type="text" class="form-control address" placeholder="Address">
 							</div>
 						</div>
 					</div>
@@ -127,7 +131,7 @@
 						<div class="form-group">
 							<div class="input-group mb-2 mr-sm-2 mb-sm-0">
 								<div class="input-group-addon">Balance #1</div>
-								<input type="text" class="form-control balance" id="" placeholder="Balance">
+								<input type="text" class="form-control balance" placeholder="Balance">
 							</div>
 						</div>
 					</div>
@@ -137,7 +141,7 @@
 						<div class="form-group">
 							<div class="input-group mb-2 mr-sm-2 mb-sm-0">
 								<div class="input-group-addon">Address #2</div>
-								<input type="text" class="form-control address" id="" placeholder="Address">
+								<input type="text" class="form-control address" placeholder="Address">
 							</div>
 						</div>
 					</div>
@@ -145,7 +149,7 @@
 						<div class="form-group">
 							<div class="input-group mb-2 mr-sm-2 mb-sm-0">
 								<div class="input-group-addon">Balance #2</div>
-								<input type="text" class="form-control balance" id="" placeholder="Balance">
+								<input type="text" class="form-control balance" placeholder="Balance">
 							</div>
 						</div>
 					</div>
@@ -155,7 +159,7 @@
 						<div class="form-group">
 							<div class="input-group mb-2 mr-sm-2 mb-sm-0">
 								<div class="input-group-addon">Address #3</div>
-								<input type="text" class="form-control address" id="" placeholder="Address">
+								<input type="text" class="form-control address" placeholder="Address">
 							</div>
 						</div>
 					</div>
@@ -163,7 +167,7 @@
 						<div class="form-group">
 							<div class="input-group mb-2 mr-sm-2 mb-sm-0">
 								<div class="input-group-addon">Balance #3</div>
-								<input type="text" class="form-control balance" id="" placeholder="Balance">
+								<input type="text" class="form-control balance" placeholder="Balance">
 							</div>
 						</div>
 					</div>
@@ -173,7 +177,7 @@
 						<div class="form-group">
 							<div class="input-group mb-2 mr-sm-2 mb-sm-0">
 								<div class="input-group-addon">Address #4</div>
-								<input type="text" class="form-control address" id="" placeholder="Address">
+								<input type="text" class="form-control address" placeholder="Address">
 							</div>
 						</div>
 					</div>
@@ -181,7 +185,7 @@
 						<div class="form-group">
 							<div class="input-group mb-2 mr-sm-2 mb-sm-0">
 								<div class="input-group-addon">Balance #4</div>
-								<input type="text" class="form-control balance" id="" placeholder="Balance">
+								<input type="text" class="form-control balance" placeholder="Balance">
 							</div>
 						</div>
 					</div>
@@ -191,7 +195,7 @@
 						<div class="form-group">
 							<div class="input-group mb-2 mr-sm-2 mb-sm-0">
 								<div class="input-group-addon">Address #5</div>
-								<input type="text" class="form-control address" id="" placeholder="Address">
+								<input type="text" class="form-control address" placeholder="Address">
 							</div>
 						</div>
 					</div>
@@ -199,7 +203,7 @@
 						<div class="form-group">
 							<div class="input-group mb-2 mr-sm-2 mb-sm-0">
 								<div class="input-group-addon">Balance #5</div>
-								<input type="text" class="form-control balance" id="" placeholder="Balance">
+								<input type="text" class="form-control balance" placeholder="Balance">
 							</div>
 						</div>
 					</div>
@@ -209,7 +213,7 @@
 						<div class="form-group">
 							<div class="input-group mb-2 mr-sm-2 mb-sm-0">
 								<div class="input-group-addon">Address #6</div>
-								<input type="text" class="form-control address" id="" placeholder="Address">
+								<input type="text" class="form-control address" placeholder="Address">
 							</div>
 						</div>
 					</div>
@@ -217,7 +221,7 @@
 						<div class="form-group">
 							<div class="input-group mb-2 mr-sm-2 mb-sm-0">
 								<div class="input-group-addon">Balance #6</div>
-								<input type="text" class="form-control balance" id="" placeholder="Balance">
+								<input type="text" class="form-control balance" placeholder="Balance">
 							</div>
 						</div>
 					</div>					
@@ -227,8 +231,11 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="panel panel-default">
-					<div class="panel-heading">Logs</div>
-					<div class="panel-body" style="text-align: center;" id="log"></div>
+					<div class="panel-heading">
+                                            Logs
+                                            <button class="btn btn-xs pull-right" id="clearLogs">Clear logs</button>
+                                        </div>
+					<div class="panel-body" style="text-align: center;max-height: 500px;overflow-y: scroll;" id="log"></div>
 				</div>
 			</div>
 		</div>
